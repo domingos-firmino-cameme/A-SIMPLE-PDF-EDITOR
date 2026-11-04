@@ -1,0 +1,42 @@
+# Pure Web - VS Code
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# VS Code - personal settings only
+.vscode/settings.json
+.vscode/launch.json
+.vscode/tasks.json
+.history/
+*.code-workspace
+
+# Logs
+*.log
+logs/
+
+# Temp / Cache
+*.tmp
+*.temp
+*.bak
+*.cache
+*.swp
+*~
+~$*
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Build
+dist/
+build/
+out/
+.cache/
+.parcel-cache/
+
+# Vercel
+.vercel

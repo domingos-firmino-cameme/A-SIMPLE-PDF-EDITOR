@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset="1" stop-color="#edf0f4"/>
+    </linearGradient>
+    <linearGradient id="page" x1="0" y1="0" x2="0.9" y2="1">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset="1" stop-color="#f8f9fb"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-25%" width="160%" height="170%">
+      <feDropShadow dx="0" dy="22" stdDeviation="22" flood-color="#2d3748" flood-opacity=".16"/>
+    </filter>
+    <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.5" fill="#c8d0dc"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#background)"/>
+  <circle cx="1000" cy="315" r="265" fill="#e3e9f1"/>
+  <circle cx="1000" cy="315" r="210" fill="#edf0f4"/>
+  <path d="M0 0h1200v12H0z" fill="#2d3748"/>
+  <path d="M0 12h310v4H0z" fill="#d95c5c"/>
+  <rect x="78" y="438" width="210" height="120" fill="url(#dots)" opacity=".75"/>
+
+  <g transform="translate(92 112)">
+    <rect width="48" height="48" rx="13" fill="#2d3748"/>
+    <path d="M14 12h13l8 8v18H14z" fill="#fff"/>
+    <path d="M27 12v9h8M18 26h12M18 31h12" fill="none" stroke="#d95c5c" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+  </g>
+  <text x="154" y="143" fill="#2d3748" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" letter-spacing="2">PDF <tspan fill="#d95c5c">EDITOR</tspan></text>
+
+  <text x="92" y="270" fill="#2d3748" font-family="Arial, Helvetica, sans-serif" font-size="57" font-weight="700" letter-spacing="-1.8">Your ideas,</text>
+  <text x="92" y="337" fill="#2d3748" font-family="Arial, Helvetica, sans-serif" font-size="57" font-weight="700" letter-spacing="-1.8">beautifully</text>
+  <text x="92" y="404" fill="#d95c5c" font-family="Arial, Helvetica, sans-serif" font-size="57" font-weight="700" letter-spacing="-1.8">on paper.</text>
+  <text x="96" y="463" fill="#667080" font-family="Arial, Helvetica, sans-serif" font-size="20">A simple, focused space to create and edit PDFs.</text>
+  <rect x="96" y="505" width="48" height="4" rx="2" fill="#d95c5c"/>
+  <rect x="152" y="505" width="22" height="4" rx="2" fill="#c8d0dc"/>
+
+  <g filter="url(#shadow)" transform="translate(766 75) rotate(3 165 238)">
+    <rect x="0" y="0" width="330" height="468" rx="15" fill="url(#page)" stroke="#dfe3e9" stroke-width="2"/>
+    <rect x="0" y="0" width="330" height="54" rx="15" fill="#2d3748"/>
+    <path d="M0 39h330v15H0z" fill="#2d3748"/>
+    <circle cx="26" cy="27" r="5" fill="#d95c5c"/>
+    <circle cx="45" cy="27" r="5" fill="#edf0f4" opacity=".72"/>
+    <circle cx="64" cy="27" r="5" fill="#edf0f4" opacity=".42"/>
+    <rect x="24" y="82" width="174" height="11" rx="5.5" fill="#2d3748"/>
+    <rect x="24" y="106" width="245" height="5" rx="2.5" fill="#c8d0dc"/>
+    <rect x="24" y="119" width="214" height="5" rx="2.5" fill="#d7dde6"/>
+    <rect x="24" y="154" width="282" height="132" rx="8" fill="#edf0f4"/>
+    <circle cx="164" cy="220" r="43" fill="#dfe6ef"/>
+    <path d="M145 240v-39a5 5 0 0 1 5-5h25l15 15v29a5 5 0 0 1-5 5h-35a5 5 0 0 1-5-5Z" fill="#fff" stroke="#9aa8bc" stroke-width="2"/>
+    <path d="M175 196v16h15M153 222h28M153 230h22" fill="none" stroke="#aab5c4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <rect x="24" y="309" width="130" height="8" rx="4" fill="#2d3748" opacity=".85"/>
+    <rect x="24" y="328" width="282" height="5" rx="2.5" fill="#c8d0dc"/>
+    <rect x="24" y="341" width="267" height="5" rx="2.5" fill="#d7dde6"/>
+    <rect x="24" y="354" width="238" height="5" rx="2.5" fill="#d7dde6"/>
+    <rect x="24" y="383" width="88" height="30" rx="6" fill="#d95c5c"/>
+    <rect x="39" y="395" width="57" height="5" rx="2.5" fill="#fff"/>
+  </g>
+
+  <g transform="translate(698 382)">
+    <rect width="62" height="62" rx="18" fill="#fff" filter="url(#shadow)"/>
+    <path d="M31 17v28M17 31h28" stroke="#d95c5c" stroke-linecap="round" stroke-width="4"/>
+  </g>
+  <circle cx="1090" cy="137" r="8" fill="#d95c5c"/>
+  <circle cx="724" cy="172" r="5" fill="#9aa8bc"/>
+</svg>

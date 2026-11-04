@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="PDF Editor Icon">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#0f6dde"/>
+      <stop offset="100%" stop-color="#0b4d9a"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="32" fill="url(#bg)"/>
+  <rect x="24" y="24" width="208" height="208" rx="24" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.45)"/>
+  <path d="M84 76h56c24 0 38 15 38 36 0 17-10 29-24 34l28 40h-28l-23-35h-16v35H84V76zm30 22v28h24c10 0 16-6 16-14s-6-14-16-14h-24z" fill="#ffffff"/>
+  <path d="M84 76h56c24 0 38 15 38 36 0 17-10 29-24 34l28 40h-28l-23-35h-16v35H84V76zm30 22v28h24c10 0 16-6 16-14s-6-14-16-14h-24z" fill="none" stroke="#dfeeff" stroke-width="4" stroke-linejoin="round" opacity="0.45"/>
+</svg>

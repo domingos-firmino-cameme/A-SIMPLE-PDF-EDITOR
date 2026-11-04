@@ -1,0 +1,14 @@
+{
+  "name": "a-simple-pdf-editor",
+  "version": "1.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "node scripts/server.js source",
+    "clean": "node scripts/clean.js",
+    "build": "node scripts/clean.js && node scripts/build.js",
+    "preview": "node scripts/server.js dist"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

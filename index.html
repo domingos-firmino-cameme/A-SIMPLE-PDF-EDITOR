@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <!-- Document Identity and Browser Baseline -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>A Simple PDF Editor</title>
+    <meta name="author" content="Domingos Cameme">
+    <meta name="application-name" content="A Simple PDF Editor">
+    <meta name="format-detection" content="telephone=no, email=no, address=no">
+
+    <!-- Search Engine and Discovery Metadata -->
+    <meta name="description" content="Personal PDF editor for simple, quick edits.">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <link rel="canonical" href="https://a-simple-pdf-editor-domingos-cameme.vercel.app/">
+
+    <!-- Theme and Rendering Defaults -->
+    <meta name="color-scheme" content="light">
+    <meta name="msapplication-TileColor" content="#ffffff">
+
+    <!-- PWA Configurations and Web App Manifest -->
+    <link rel="manifest" href="/config/manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- iOS / Safari PWA Native Integration -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="A Simple PDF Editor">
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+
+    <!-- Standard & Vector Favicons -->
+    <link rel="icon" href="/assets/icons/favicon.ico" sizes="any">
+    <link rel="icon" href="/assets/icons/favicon.svg" type="image/svg+xml">
+
+    <!-- App Asset Pipeline: Stylesheets, Font Bundles, and Local Scripts -->
+    <link rel="preload" href="/src/styles/main.css" as="style">
+    <link rel="preload" href="/src/styles/builder.css" as="style">
+    <link rel="preload" href="/assets/vendor/fontawesome/css/all.min.css" as="style">
+    <link rel="preload" href="/src/scripts/main.js" as="script">
+    <link rel="preload" href="/src/scripts/builder.js" as="script">
+    <link rel="preload" href="/src/scripts/pwa-install.js" as="script">
+    <link rel="preload" href="/assets/vendor/pdfmake/pdfmake.min.js" as="script">
+    <link rel="preload" href="/assets/vendor/pdfmake/vfs_fonts.js" as="script">
+
+    <link rel="stylesheet" href="/assets/vendor/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="/src/styles/main.css">
+    <link rel="stylesheet" href="/src/styles/builder.css">
+
+    <!-- Social Sharing and Preview Card Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://a-simple-pdf-editor-domingos-cameme.vercel.app/">
+    <meta property="og:site_name" content="PDF Editor">
+    <meta property="og:title" content="A Simple PDF Editor">
+    <meta property="og:description" content="Personal PDF editor for simple, quick edits.">
+    <meta property="og:image" content="https://a-simple-pdf-editor-domingos-cameme.vercel.app/assets/images/og-cover.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="A PDF Editor cover with the message Your ideas, beautifully on paper, alongside a clean document illustration.">
+    <meta property="og:locale" content="en_US">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@pdf-editor">
+    <meta name="twitter:title" content="A Simple PDF Editor">
+    <meta name="twitter:description" content="Personal PDF editor for simple, quick edits.">
+    <meta name="twitter:image" content="https://a-simple-pdf-editor-domingos-cameme.vercel.app/assets/images/og-cover.png">
+
+    <!-- Browser Security Policy and Resource Boundary Rules -->
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self';
+        worker-src 'self';
+        style-src 'self';
+        font-src 'self';
+        img-src 'self' data: blob: https: http:;
+        connect-src 'self';
+        manifest-src 'self';
+        object-src 'none';
+        base-uri 'self';
+        form-action 'self';
+    ">
+
+    <!-- Structured Data for Search Engines and App Indexing -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "A Simple PDF Editor",
+      "url": "https://a-simple-pdf-editor-domingos-cameme.vercel.app/",
+      "description": "Personal PDF editor for simple, quick edits.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "author": {
+        "@type": "Person",
+        "name": "Domingos Cameme"
+      }
+    }
+    </script>
+</head>
+
+<body>
+    <header>
+        <!-- Header content -->
+        <div class="header-top-bar">
+            <div class="header-left-group">
+                <h1 class="logo">
+                    <a href="#" id="logoLink">PDF <span class="highlight">EDITOR</span></a>
+                </h1>
+
+                <nav class="header-menu" aria-label="Document actions">
+                    <button type="button" class="header-menu-item" data-header-action="document" aria-label="Document settings" title="Document settings">
+                        <i class="fa-solid fa-file-lines" aria-hidden="true"></i>
+                        <span>Document</span>
+                    </button>
+                    <button type="button" class="header-menu-item" data-header-action="layout" aria-label="Layout settings" title="Layout settings">
+                        <i class="fa-solid fa-layer-group"></i>
+                        <span>Layout</span>
+                    </button>
+                    <button type="button" class="header-menu-item" data-header-action="tools" aria-label="Tools" title="Tools">
+                        <i class="fa-solid fa-wrench" aria-hidden="true"></i>
+                        <span>Tools</span>
+                    </button>
+                    <button type="button" class="header-menu-item" data-header-action="export" aria-label="Export" title="Export">
+                        <i class="fa-solid fa-file-export" aria-hidden="true"></i>
+                        <span>Export</span>
+                    </button>
+                    <button type="button" class="header-menu-item header-save" id="btnSaveDocument" data-header-action="save" aria-label="Save document" title="Save document">
+                        <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
+                        <span>Save</span>
+                    </button>
+                    <button type="button" class="header-menu-item" id="btnInstallApp" aria-label="Install app" title="Install app" hidden>
+                        <i class="fa-solid fa-download" aria-hidden="true"></i>
+                        <span>Install</span>
+                    </button>
+                </nav>
+            </div>
+
+            <button type="button" class="btn-exit" id="btnExit" title="Leave PDF Editor" aria-label="Leave PDF Editor">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <div class="tools-bar" aria-label="Document Tools" role="toolbar">
+            <!-- Text structure actions: insert major content blocks such as headings, subtitles and paragraphs -->
+            <button type="button" aria-haspopup="dialog" data-modal-target="modalHeading" aria-label="Add title" title="Add title"><i class="fa-solid fa-t" aria-hidden="true"></i>
+            </button>
+
+            <button type="button" aria-haspopup="dialog" data-modal-target="modalSubtitle" aria-label="Add subtitle" title="Add subtitle"><i class="fa-solid fa-align-left" aria-hidden="true"></i>
+            </button>
+
+            <button type="button" aria-haspopup="dialog" data-modal-target="modalSubheading" aria-label="Add subheading (H4)" title="Add subheading (H4)"><i class="fa-solid fa-heading" aria-hidden="true"></i>
+            </button>
+
+            <button type="button" aria-haspopup="dialog" data-modal-target="modalParagraph" aria-label="Add paragraph" title="Add paragraph"><i class="fa-solid fa-paragraph" aria-hidden="true"></i>
+            </button>
+
+            <button type="button" aria-haspopup="dialog" data-modal-target="modalVerticalSpacing" aria-label="Add vertical spacing" title="Add vertical spacing"><i class="fa-solid fa-arrows-up-down" aria-hidden="true"></i>
+            </button>
+
+            <!-- Media and layout actions: insert visual content and tabular structure -->
+            <button type="button" aria-haspopup="dialog" data-modal-target="modalImage" aria-label="Add image" title="Add image"><i class="fa-solid fa-image" aria-hidden="true"></i>
+            </button>
+
+            <button type="button" aria-haspopup="dialog" data-modal-target="modalResizeImage" aria-label="Resize image" title="Resize image"><i class="fa-solid fa-up-right-and-down-left-from-center" aria-hidden="true"></i>
+            </button>
+
+            <button type="button" aria-haspopup="dialog" data-modal-target="modalTable" aria-label="Add table" title="Add table"><i class="fa-solid fa-table" aria-hidden="true"></i>
+            </button>
+
+            <!-- Code and inline formatting actions: insert technical snippets and style selected text -->
+            <button type="button" aria-haspopup="dialog" data-modal-target="modalCode" aria-label="Add code" title="Add code"><i class="fa-solid fa-code" aria-hidden="true"></i>
+            </button>
+
+            <button type="button" aria-haspopup="dialog" data-modal-target="modalItalic" aria-label="Add italic text" title="Add italic text"><i class="fa-solid fa-italic" aria-hidden="true"></i>
+            </button>
+
+            <button type="button" aria-haspopup="dialog" data-modal-target="modalTextSize" aria-label="Resize selected text" title="Resize selected text"><i class="fa-solid fa-text-height" aria-hidden="true"></i>
+            </button>
+
+            <button type="button" id="btnBoldSelection" data-tool-route="bold" aria-label="Bold selected text" title="Bold selected text"><i class="fa-solid fa-bold" aria-hidden="true"></i>
+            </button>
+
+            <button type="button" id="btnHighlightSelection" data-tool-route="highlight" aria-label="Highlight selected text" title="Highlight selected text"><i class="fa-solid fa-highlighter" aria-hidden="true"></i>
+            </button>
+
+            <button type="button" id="btnSelectToEdit" data-tool-route="select-to-edit" aria-pressed="false" aria-label="Select content to edit" title="Select content to edit"><i class="fa-solid fa-i-cursor" aria-hidden="true"></i>
+            </button>
+
+            <!-- Structured content actions: lists, links, and document metadata -->
+            <button type="button" aria-haspopup="dialog" data-modal-target="modalList" aria-label="Add list" title="Add list"><i class="fa-solid fa-list-ul" aria-hidden="true"></i>
+            </button>
+
+            <button type="button" aria-haspopup="dialog" data-modal-target="modalLink" aria-label="Add link" title="Add link"><i class="fa-solid fa-link" aria-hidden="true"></i>
+            </button>
+
+            <button type="button" aria-haspopup="dialog" data-modal-target="modalMetadata" aria-label="Add document metadata" title="Add document metadata"><i class="fa-solid fa-file-invoice" aria-hidden="true"></i>
+            </button>
+        </div>
+
+        <div class="tool-modals">
+            <div class="tool-empty-state" id="toolEmptyState" aria-label="Tool panel empty state" role="region" aria-live="polite" aria-atomic="true">
+                <button class="empty-state-close" id="toolEmptyStateClose" type="button" aria-label="Close tools panel">&times;</button>
+                <div class="empty-illustration" aria-hidden="true">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="empty-state-content">
+                    <h2>Your tools panel</h2>
+                    <p>Choose a tool to start building the document.</p>
+                    <small>The content added will appear in the preview sheet.</small>
+                    <section class="empty-guide" aria-label="Getting started">
+                        <h3>A simple workflow</h3>
+                        <ol>
+                            <li><span>1</span>
+                                <div><strong>Set the structure</strong><small>Add a title, subtitle, or section heading.</small></div>
+                            </li>
+                            <li><span>2</span>
+                                <div><strong>Build your content</strong><small>Bring in text, images, tables, and links.</small></div>
+                            </li>
+                            <li><span>3</span>
+                                <div><strong>Review and export</strong><small>Check the preview, then save or print.</small></div>
+                            </li>
+                        </ol>
+                    </section>
+                </div>
+            </div>
+
+            <form class="tool-modal" id="modalHeading" hidden>
+                <div class="tool-modal-header">
+                    <i class="fa-solid fa-heading" aria-hidden="true"></i>
+                    <div>
+                        <h2 id="headingHeading">Title</h2>
+                        <p>Add a title to the document.</p>
+                    </div>
+                </div>
+
+                <label for="headingInput">Title</label>
+                <div class="modal-fields">
+                    <input type="text" id="headingInput">
+                    <button type="submit" id="btnAddHeading">Add</button>
+                </div>
+
+                <div class="tool-modal-extra">
+                    <strong>Tip</strong>
+                    <p>Use a short title to create a clear hierarchy on the page.</p>
+                </div>
+            </form>
+
+            <form class="tool-modal" id="modalDocumentSettings" hidden>
+                <div class="tool-modal-header">
+                    <i class="fa-solid fa-file-lines" aria-hidden="true"></i>
+                    <div>
+                        <h2 id="headingDocumentSettings">Document Settings</h2>
+                        <p>Update the title and metadata of the document.</p>
+                    </div>
+                </div>
+
+                <div class="modal-fields">
+                    <div class="field-group">
+                        <label for="documentTitleInput">Document title</label>
+                        <input type="text" id="documentTitleInput" placeholder="Project report">
+                    </div>
+
+                    <div class="field-group">
+                        <label for="documentAuthorInput">Author</label>
+                        <input type="text" id="documentAuthorInput" placeholder="Your name">
+                    </div>
+
+                    <div class="field-group">
+                        <label for="documentTypeInput">Document type</label>
+                        <select id="documentTypeInput">
+                            <option value="report">Report</option>
+                            <option value="essay">Essay</option>
+                            <option value="study">Study</option>
+                            <option value="summary">Summary</option>
+                        </select>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" data-action="cancel">Cancel</button>
+                        <button type="submit">Apply</button>
+                    </div>
+                </div>
+
+                <div class="tool-modal-extra">
+                    <strong>Document identity</strong>
+                    <p>Keep the title and metadata organized before exporting or printing.</p>
+                </div>
+            </form>
+
+            <form class="tool-modal" id="modalLayoutSettings" hidden>
+                <div class="tool-modal-header">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <div>
+                        <h2 id="headingLayoutSettings">Layout</h2>
+                        <p>Adjust the page structure and presentation.</p>
+                    </div>
+                </div>
+
+                <div class="modal-fields">
+                    <div class="field-group">
+                        <label for="layoutPresetInput">Preset</label>
+                        <select id="layoutPresetInput">
+                            <option value="standard">Standard</option>
+                            <option value="compact">Compact</option>
+                            <option value="editorial">Editorial</option>
+                            <option value="study">Study</option>
+                        </select>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="layoutMarginInput">Margin</label>
+                        <input type="range" id="layoutMarginInput" min="10" max="40" value="20">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" data-action="cancel">Cancel</button>
+                        <button type="submit">Apply</button>
+                    </div>
+                </div>
+
+                <div class="tool-modal-extra">
+                    <strong>Page tuning</strong>
+                    <p>Prepare the visual rhythm before printing the final document.</p>
+                </div>
+            </form>
+
+            <form class="tool-modal" id="modalQuickActions" hidden>
+                <div class="tool-modal-header">
+                    <i class="fa-solid fa-wrench" aria-hidden="true"></i>
+                    <div>
+                        <h2 id="headingQuickActions">Quick Actions</h2>
+                        <p>Start with the most common document operations.</p>
+                    </div>
+                </div>
+
+                <div class="modal-fields">
+                    <div class="field-group">
+                        <label for="quickActionSelect">Action</label>
+                        <select id="quickActionSelect">
+                            <option value="paragraph">Add paragraph</option>
+                            <option value="spacing">Add vertical spacing</option>
+                            <option value="subtitle">Add subtitle</option>
+                            <option value="subheading">Add subheading (H4)</option>
+                            <option value="image">Add image</option>
+                            <option value="resizeImage">Resize image</option>
+                            <option value="table">Add table</option>
+                            <option value="code">Add code</option>
+                            <option value="italic">Add italic text</option>
+                            <option value="textSize">Resize selected text</option>
+                            <option value="bold">Add bold text</option>
+                            <option value="highlight">Add highlight</option>
+                            <option value="list">Add list</option>
+                            <option value="link">Add link</option>
+                            <option value="metadata">Add metadata</option>
+                            <option value="select">Select content to edit</option>
+                        </select>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" data-action="cancel">Cancel</button>
+                        <button type="submit">Open</button>
+                    </div>
+                </div>
+
+                <div class="tool-modal-extra">
+                    <strong>Fast workflow</strong>
+                    <p>Open the most useful editing tasks without leaving the main document.</p>
+                </div>
+            </form>
+
+            <form class="tool-modal" id="modalExportOptions" hidden>
+                <div class="tool-modal-header">
+                    <i class="fa-solid fa-file-export" aria-hidden="true"></i>
+                    <div>
+                        <h2 id="headingExportOptions">Export</h2>
+                        <p>Prepare the document for final delivery.</p>
+                    </div>
+                </div>
+
+                <div class="modal-fields">
+                    <div class="field-group">
+                        <label for="exportFormatInput">Format</label>
+                        <select id="exportFormatInput">
+                            <option value="pdf">PDF document</option>
+                            <option value="html">HTML snapshot</option>
+                            <option value="json">JSON draft</option>
+                        </select>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" data-action="cancel">Cancel</button>
+                        <button type="submit">Export</button>
+                    </div>
+                </div>
+
+                <div class="tool-modal-extra">
+                    <strong>Final delivery</strong>
+                    <p>Download the document as a PDF, HTML snapshot, or JSON draft.</p>
+                </div>
+            </form>
+
+            <form class="tool-modal" id="modalSaveOptions" hidden>
+                <div class="tool-modal-header">
+                    <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
+                    <div>
+                        <h2 id="headingSaveOptions">Save</h2>
+                        <p>Store your current document state.</p>
+                    </div>
+                </div>
+
+                <div class="modal-fields">
+                    <div class="field-group">
+                        <label for="saveProfileInput">Save profile</label>
+                        <select id="saveProfileInput">
+                            <option value="draft">Draft</option>
+                            <option value="review">Review</option>
+                            <option value="final">Final</option>
+                        </select>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" data-action="cancel">Cancel</button>
+                        <button type="button" id="printDocument" aria-label="Print or save as PDF">Print</button>
+                        <button type="submit">Save</button>
+                    </div>
+                </div>
+
+                <div class="tool-modal-extra">
+                    <strong>Session state</strong>
+                    <p>Save progress and continue editing later without losing the document structure.</p>
+                </div>
+            </form>
+
+            <form class="tool-modal" id="modalSubtitle" hidden>
+                <div class="tool-modal-header">
+                    <i class="fa-solid fa-align-left" aria-hidden="true"></i>
+                    <div>
+                        <h2 id="headingSubtitle">Subtitle</h2>
+                        <p>Add a subtitle below the title.</p>
+                    </div>
+                </div>
+
+                <label for="subtitleInput">Subtitle</label>
+                <div class="modal-fields">
+                    <input type="text" id="subtitleInput" value="">
+                    <button type="submit" id="btnAddSubtitle">Add</button>
+                </div>
+
+                <div class="tool-modal-extra">
+                    <strong>Tip</strong>
+                    <p>Use a subtitle to provide additional context or details about your document.</p>
+                </div>
+            </form>
+
+            <form class="tool-modal" id="modalSubheading" hidden>
+                <div class="tool-modal-header">
+                    <i class="fa-solid fa-heading" aria-hidden="true"></i>
+                    <div>
+                        <h2 id="headingSubheading">Subheading (H4)</h2>
+                        <p>Add a subtopic or division within a topic.</p>
+                    </div>
+                </div>
+
+                <label for="subheadingInput">Subheading</label>
+                <div class="modal-fields">
+                    <input type="text" id="subheadingInput">
+                    <button type="submit">Add</button>
+                </div>
+
+                <div class="tool-modal-extra">
+                    <strong>Tip</strong>
+                    <p>Use this heading level to divide a topic into smaller sections.</p>
+                </div>
+            </form>
+
+            <form class="tool-modal" id="modalParagraph" hidden>
+                <div class="tool-modal-header">
+                    <i class="fa-solid fa-paragraph" aria-hidden="true"></i>
+                    <div>
+                        <h2 id="headingParagraph">Paragraph</h2>
+                        <p>Insert the main text of the page.</p>
+                    </div>
+                </div>
+                <label for="paragraphInput">Paragraph</label>
+                <div class="modal-fields">
+                    <textarea id="paragraphInput" rows="4" placeholder="Write the text..."></textarea>
+                    <button type="submit">Add</button>
+                </div>
+                <div class="tool-modal-extra"><strong>Comfortable Writing</strong>
+                    <p>You can insert a lot of text. The sheet grows and the scroll is limited to the preview.</p>
+                </div>
+            </form>
+
+            <form class="tool-modal" id="modalVerticalSpacing" hidden>
+                <div class="tool-modal-header">
+                    <i class="fa-solid fa-arrows-up-down" aria-hidden="true"></i>
+                    <div>
+                        <h2 id="headingVerticalSpacing">Vertical spacing</h2>
+                        <p>Adjust the gap between content blocks.</p>
+                    </div>
+                </div>
+                <div class="modal-fields">
+                    <div class="field-group">
+                        <label for="verticalSpacingInput">Space: <output id="verticalSpacingValue" for="verticalSpacingInput">24 px</output></label>
+                        <input type="range" id="verticalSpacingInput" min="4" max="160" step="4" value="24">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" data-action="cancel">Cancel</button>
+                        <button type="submit">Add spacing</button>
+                    </div>
+                </div>
+                <div class="tool-modal-extra">
+                    <strong>Page rhythm</strong>
+                    <p>Use a vertical gap to separate sections and improve the document's readability.</p>
+                </div>
+            </form>
+
+            <form class="tool-modal" id="modalImage" hidden>
+                <div class="tool-modal-header">
+                    <i class="fa-solid fa-image" aria-hidden="true"></i>
+                    <div>
+                        <h2 id="headingImage">Image</h2>
+                        <p>Add an image from a URL or your device.</p>
+                    </div>
+                </div>
+
+                <div class="modal-fields modal-options">
+                    <div class="field-group">
+                        <label for="imageInput">Image URL</label>
+                        <input type="url" id="imageInput" placeholder="https://example.com/image.jpg">
+                    </div>
+
+                    <div class="field-group">
+                        <span class="field-label">Upload image</span>
+                        <div class="image-upload-control">
+                            <input type="file" id="imageFileInput" accept="image/*" hidden>
+                            <button type="button" class="image-upload-button" id="chooseImageFile">upload <i class="fa-solid fa-cloud-arrow-down" aria-hidden="true"></i></button>
+                            <span class="image-file-name" id="imageFileName" role="status" aria-live="polite">No image selected</span>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" data-action="cancel">Cancel</button>
+                        <button type="submit">Add</button>
+                    </div>
+                </div>
+
+                <div class="tool-modal-extra"><strong>Image source</strong>
+                    <p>Use a public URL or upload a file directly from your computer.</p>
+                </div>
+            </form>
+
+            <form class="tool-modal" id="modalResizeImage" hidden>
+                <div class="tool-modal-header">
+                    <i class="fa-solid fa-up-right-and-down-left-from-center" aria-hidden="true"></i>
+                    <div>
+                        <h2 id="headingResizeImage">Resize image</h2>
+                        <p>Choose an image in the sheet and adjust its width.</p>
+                    </div>
+                </div>
+
+                <div class="modal-fields">
+                    <div class="field-group">
+                        <span class="field-label">Choose an image</span>
+                        <div id="resizeImageChoices" class="resize-image-choices" role="radiogroup" aria-label="Image to resize"></div>
+                    </div>
+                    <div class="field-group">
+                        <label for="resizeImageWidth">Width: <output id="resizeImageWidthValue" for="resizeImageWidth">100%</output></label>
+                        <input type="range" id="resizeImageWidth" min="10" max="100" step="1" value="100" disabled>
+                    </div>
+                    <p id="resizeImageEmptyMessage" role="status">Add an image to the sheet before resizing it.</p>
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" data-action="cancel">Cancel</button>
+                        <button type="button" class="btn-delete-image" id="deleteSelectedImage" disabled>Delete image</button>
+                        <button type="submit" id="applyImageResize" disabled>Apply</button>
+                    </div>
+                </div>
+
+                <div class="tool-modal-extra">
+                    <strong>Proportional resize</strong>
+                    <p>Height adjusts automatically to preserve the image's proportions.</p>
+                </div>
+            </form>
+
+            <form class="tool-modal" id="modalTable" aria-labelledby="headingTable" hidden>
+                <div class="tool-modal-header">
+                    <i class="fa-solid fa-table" aria-hidden="true"></i>
+                    <div>
+                        <h2 id="headingTable">Table</h2>
+                        <p>Define the number of columns and rows.</p>
+                    </div>
+                </div>
+
+                <div class="modal-fields modal-options">
+                    <div class="field-group">
+                        <label for="tableColumns">Columns</label>
+                        <input type="number" id="tableColumns" min="1" max="10" value="3" aria-label="Columns">
+                    </div>
+
+                    <div class="field-group">
+                        <label for="tableRows">Rows</label>
+                        <input type="number" id="tableRows" min="1" max="30" value="3" aria-label="Rows">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" data-action="cancel">Cancel</button>
+                        <button type="submit">Add</button>
+                    </div>
+                </div>
+                <div class="tool-modal-extra">
+                    <strong>Table Structure</strong>
+                    <p>Start with a simple grid. You can then fill in the cells in the document.</p>
+                </div>
+            </form>
+
+            <form class="tool-modal" id="modalCode" hidden>
+                <div class="tool-modal-header">
+                    <i class="fa-solid fa-code" aria-hidden="true"></i>
+                    <div>
+                        <h2 id="headingCode">Code</h2>
+                        <p>Insert a formatted code block.</p>
+                    </div>
+                </div>
+                <label for="codeInput">Code</label>
+                <div class="modal-fields">
+                    <textarea id="codeInput" rows="5" placeholder="Paste your code..."></textarea>
+                    <button type="submit">Add</button>
+                </div>
+                <div class="tool-modal-extra"><strong>Technical Block</strong>
+                    <p>Ideal for examples, commands or snippets that need to be visually separated.</p>
+                </div>
+            </form>
+
+            <form class="tool-modal" id="modalItalic" hidden>
+                <div class="tool-modal-header">
+                    <i class="fa-solid fa-italic" aria-hidden="true"></i>
+                    <div>
+                        <h2 id="headingItalic">Italic</h2>
+                        <p>Highlight a phrase in the document.</p>
+                    </div>
+                </div>
+                <label for="italicInput">Italic</label>
+                <div class="modal-fields">
+                    <input type="text" id="italicInput" placeholder="Italic text">
+                    <button type="submit">Add</button>
+                </div>
+                <div class="tool-modal-extra"><strong>Emphasis</strong>
+                    <p>Use with moderation to highlight an important expression or observation.</p>
+                </div>
+            </form>
+
+            <form class="tool-modal" id="modalTextSize" hidden>
+                <div class="tool-modal-header">
+                    <i class="fa-solid fa-text-height" aria-hidden="true"></i>
+                    <div>
+                        <h2 id="headingTextSize">Text size</h2>
+                        <p>Adjust the size of text selected in the preview sheet.</p>
+                    </div>
+                </div>
+                <div class="modal-fields">
+                    <div class="field-group">
+                        <label for="textSizeInput">Font size: <output id="textSizeValue" for="textSizeInput">16 px</output></label>
+                        <input type="range" id="textSizeInput" min="8" max="48" step="1" value="16" disabled>
+                    </div>
+                    <p id="textSizeStatus" role="status">Select text in the preview, then open this tool.</p>
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" data-action="cancel">Cancel</button>
+                        <button type="submit" id="applyTextSize" disabled>Apply</button>
+                    </div>
+                </div>
+                <div class="tool-modal-extra">
+                    <strong>Selection formatting</strong>
+                    <p>Only the selected text will change size. The rest of the document remains unchanged.</p>
+                </div>
+            </form>
+
+            <form class="tool-modal" id="modalBold" hidden>
+                <div class="tool-modal-header">
+                    <i class="fa-solid fa-bold" aria-hidden="true"></i>
+                    <div>
+                        <h2 id="headingBold">Bold</h2>
+                        <p>Add a concept or keyword in bold.</p>
+                    </div>
+                </div>
+                <label for="boldInput">Bold text</label>
+                <div class="modal-fields">
+                    <input type="text" id="boldInput" placeholder="e.g. Array methods, .filter(), reduce()">
+                    <button type="submit">Add</button>
+                </div>
+                <div class="tool-modal-extra"><strong>Classification</strong>
+                    <p>Useful for naming methods, concepts, patterns, or technical classifications.</p>
+                </div>
+            </form>
+
+            <form class="tool-modal" id="modalHighlight" hidden>
+                <div class="tool-modal-header">
+                    <i class="fa-solid fa-highlighter" aria-hidden="true"></i>
+                    <div>
+                        <h2 id="headingHighlight">Highlight</h2>
+                        <p>Mark a relevant word or phrase.</p>
+                    </div>
+                </div>
+                <label for="highlightInput">Highlighted text</label>
+                <div class="modal-fields">
+                    <input type="text" id="highlightInput" placeholder="e.g. important concept">
+                    <button type="submit">Add</button>
+                </div>
+                <div class="tool-modal-extra"><strong>Visual emphasis</strong>
+                    <p>Use it to mark especially relevant terms anywhere in the document.</p>
+                </div>
+            </form>
+
+            <form class="tool-modal" id="modalList" hidden>
+                <div class="tool-modal-header">
+                    <i class="fa-solid fa-list-ul" aria-hidden="true"></i>
+                    <div>
+                        <h2 id="headingList">List</h2>
+                        <p>Add an item per line.</p>
+                    </div>
+                </div>
+                <label for="listInput">List</label>
+                <div class="modal-fields">
+                    <textarea id="listInput" rows="4" placeholder="One item per line..."></textarea>
+                    <button type="submit">Add</button>
+                </div>
+                <div class="tool-modal-extra"><strong>Organization</strong>
+                    <p>Enter each item on a separate line to maintain quick and organized reading.</p>
+                </div>
+            </form>
+
+            <form class="tool-modal" id="modalLink" aria-labelledby="headingLink" hidden>
+                <div class="tool-modal-header">
+                    <i class="fa-solid fa-link" aria-hidden="true"></i>
+                    <div>
+                        <h2 class="headingLink">Link</h2>
+                        <p>Create a link to an external page.</p>
+                    </div>
+                </div>
+
+                <div class="modal-fields">
+                    <div class="field-group">
+                        <label for="linkText">Link Text</label>
+                        <input type="text" id="linkText" placeholder="Link text">
+                    </div>
+
+                    <div class="field-group">
+                        <label for="linkUrl">URL</label>
+                        <input type="url" id="linkUrl" placeholder="https://example.com">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" data-action="cancel">Cancel</button>
+                        <button type="submit">Add</button>
+                    </div>
+                </div>
+
+                <div class="tool-modal-extra"><strong>Navigation</strong>
+                    <p>Provide a descriptive text and a valid address to create a useful link.</p>
+                </div>
+            </form>
+
+            <form class="tool-modal" id="modalMetadata" aria-labelledby="headingMetadata" hidden>
+                <div class="tool-modal-header">
+                    <i class="fa-solid fa-file-invoice" aria-hidden="true"></i>
+                    <div>
+                        <h2 id="headingMetadata">Document Metadata</h2>
+                        <p>Add information about the document's purpose.</p>
+                    </div>
+                </div>
+
+                <div class="modal-fields">
+                    <!-- Academic context: course, institution, program, year and teaching unit -->
+                    <fieldset class="metadata-group">
+                        <legend>Academic Context</legend>
+
+                        <div class="field-group">
+                            <label for="metadataCourse">Course</label>
+                            <input type="text" id="metadataCourse" placeholder="e.g., Introduction to Computer Science">
+                        </div>
+
+                        <div class="field-group">
+                            <label for="metadataInstitution">Institution</label>
+                            <input type="text" id="metadataInstitution" placeholder="e.g., University Name">
+                        </div>
+
+                        <div class="field-group">
+                            <label for="metadataProgram">Program</label>
+                            <input type="text" id="metadataProgram" placeholder="e.g., Bachelor's Degree">
+                        </div>
+
+                        <div class="field-group">
+                            <label for="metadataAcademicYear">Academic Year</label>
+                            <input type="text" id="metadataAcademicYear" placeholder="e.g., 2025/2026">
+                        </div>
+
+                        <div class="field-group">
+                            <label for="metadataModule">Module</label>
+                            <input type="text" id="metadataModule" placeholder="e.g., Module A">
+                        </div>
+                    </fieldset>
+
+                    <!-- Administrative record: document identification, issuance authority, and date -->
+                    <fieldset class="metadata-group">
+                        <legend>Administrative Record</legend>
+
+                        <div class="field-group">
+                            <label for="metadataDocumentID">Document ID</label>
+                            <input type="text" id="metadataDocumentID" placeholder="e.g., DOC-2025-001">
+                        </div>
+
+                        <div class="field-group">
+                            <label for="metadataIssuedBy">Issued By</label>
+                            <input type="text" id="metadataIssuedBy" placeholder="e.g., Department Name">
+                        </div>
+
+                        <div class="field-group">
+                            <label for="metadataDate">Date</label>
+                            <input type="date" id="metadataDate">
+                        </div>
+                    </fieldset>
+
+                    <!-- Lifecycle status: review stage and publication state of the document -->
+                    <fieldset class="metadata-group">
+                        <legend>Lifecycle Status</legend>
+
+                        <div class="field-group">
+                            <label for="metadataStatus">Status</label>
+                            <select id="metadataStatus" aria-label="Document status">
+                                <option value="">-- Select Status --</option>
+                                <option value="Draft">Draft</option>
+                                <option value="In Review">In Review</option>
+                                <option value="Approved">Approved</option>
+                                <option value="Published">Published</option>
+                                <option value="Archived">Archived</option>
+                            </select>
+                        </div>
+                    </fieldset>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" data-action="cancel">Cancel</button>
+                        <button type="submit">Add</button>
+                    </div>
+                </div>
+
+                <div class="tool-modal-extra"><strong>Document Information</strong>
+                    <p>Fill in the relevant fields to document the purpose and context of this document.</p>
+                </div>
+            </form>
+        </div>
+
+        <section class="document-preview">
+            <div class="selection-edit-hint" id="selectionEditHint" role="status" aria-live="polite" hidden>
+                <i class="fa-solid fa-arrow-pointer" aria-hidden="true"></i>
+                <span><strong>Selection mode is active</strong><small>Point to a text block and click to edit it. Press Esc to exit.</small></span>
+                <button type="button" id="exitSelectionEditMode">Done</button>
+            </div>
+            <article class="document-sheet" id="documentSheet"></article>
+        </section>
+
+    </main>
+    <footer class="app-footer" aria-label="Application Information">
+        <span>&copy; 2026 &bull; PDF Editor. All rights reserved.</span>
+    </footer>
+
+    <main class="exit-screen" id="exitScreen" aria-labelledby="exitScreenTitle" hidden>
+        <div class="exit-loading" id="exitLoading" role="status" hidden>
+            <span class="exit-spinner" aria-hidden="true"></span>
+            <p>Loading resources...</p>
+        </div>
+        <div class="exit-content" id="exitContent" hidden>
+            <svg class="exit-illustration" viewBox="0 0 176 160" aria-hidden="true" focusable="false">
+                <circle class="exit-illustration-halo" cx="82" cy="78" r="65" />
+                <g class="exit-page">
+                    <path d="M54 34h43l23 23v68H54z" />
+                    <path d="M97 34v24h23" />
+                    <path class="exit-page-line" d="M68 75h37M68 87h37M68 99h25" />
+                </g>
+                <path class="exit-motion-trail" d="M104 119c13-2 21-9 29-19" />
+                <path class="exit-motion-arrow" d="m126 98 8 1-1 8" />
+                <circle class="exit-illustration-dot" cx="39" cy="54" r="3" />
+                <circle class="exit-illustration-dot exit-illustration-dot-secondary" cx="130" cy="45" r="2" />
+            </svg>
+            <p class="exit-eyebrow">PDF Editor</p>
+            <h2 id="exitScreenTitle">You have left your editing workspace</h2>
+            <p>Your document is still open in this tab. You can return whenever you are ready to continue editing.</p>
+            <button class="exit-return" id="exitReturn" type="button">Return to editor</button>
+        </div>
+    </main>
+
+    <div class="welcome-overlay" id="welcomeOverlay">
+        <section class="welcome-modal" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
+            <button class="modal-close" id="welcomeClose" type="button" aria-label="Close welcome">&times;</button>
+            <p class="welcome-eyebrow">PDF Editor</p>
+            <h2 id="welcomeTitle">Welcome to your editing space</h2>
+            <p>Add titles, text, images and other elements to the document using the toolbar.</p>
+            <p class="welcome-details">Start by choosing a tool. The content will be inserted on the sheet in the center
+                and
+                can grow freely as the document gets larger.</p>
+            <p class="welcome-details">Use the preview area to track the result and scroll only within
+                the document when there is a lot of content.</p>
+            <button class="welcome-action" id="welcomeAction" type="button">Start editing</button>
+        </section>
+    </div>
+
+    <script src="./assets/vendor/pdfmake/pdfmake.min.js" defer></script>
+    <script src="./assets/vendor/pdfmake/vfs_fonts.js" defer></script>
+    <script src="./src/scripts/main.js" defer></script>
+    <script src="./src/scripts/builder.js" defer></script>
+    <script src="./src/scripts/pwa-install.js" defer></script>
+</body>
+
+</html>

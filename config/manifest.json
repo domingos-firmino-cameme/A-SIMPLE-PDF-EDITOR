@@ -1,0 +1,32 @@
+{
+  "name": "A Simple PDF Editor",
+  "short_name": "PDF Editor",
+  "description": "Personal PDF editor for simple, quick edits.",
+  "id": "../index.html",
+  "start_url": "../index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2d3748",
+  "orientation": "portrait",
+  "scope": "../",
+  "icons": [
+    {
+      "src": "../assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "../assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "../assets/icons/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
